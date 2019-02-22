@@ -11,9 +11,10 @@
   <div class="my-3 p-3 bg-white rounded shadow-sm">
       <ul class="list-group">
           <ng-template #recursiveList let-list>
-            <li *ngFor="let item of list" class="list-group-item">
+            <li *ngFor="let item of list; let i = index" class="list-group-item">
 
               <div
+                *ngIf="item"
                 class="d-flex justify-content-between align-items-center"
                 [ngClass]="{'pb-3' : item.children.length > 0}">
                   <div>
@@ -27,13 +28,15 @@
                       type="button"
                       class="btn btn-outline-primary mr-3">Add</button>
 
-                      <button type="button" class="btn btn-danger" (click)="onRemoveItem(item)"> Remove</button>
+                      <button
+                      type="button"
+                      class="btn btn-danger" (click)="onRemoveItem(list,i)">Remove</button>
                   </div>
 
               </div>
 
-              <ul *ngIf="item.children.length > 0">
-                <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: item.children }"></ng-container>
+              <ul *ngIf="item?.children.length > 0">
+                <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: item?.children }"></ng-container>
               </ul>
 
             </li>
