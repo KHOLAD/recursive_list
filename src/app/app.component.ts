@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -8,19 +9,28 @@ import { Component } from '@angular/core';
 
 export class AppComponent {
 
-  public list = [
+  public category = new FormControl('');
+  public list: any = [
     {
-      title: 'New list',
-      children: [],
-    },
+      title: "test",
+      children: []
+    }
   ];
 
-  onAdd(item) {
-    item.push({title: "New", children:[]})
+  addItem(list: any) {
+    list.push({title: "New", children:[]})
   }
 
-  onRemoveItem(arr: any, index: number) {
-    arr.splice(index,1)
+  removeItem(payload: any) {
+    const { list } = payload
+    const { index } = payload
+    list.splice(index,1)
+  }
+
+  addCategory() {
+    const { value } = this.category;
+    this.list.unshift({title: value, children: []})
+    this.category.setValue(null)
   }
 
 }

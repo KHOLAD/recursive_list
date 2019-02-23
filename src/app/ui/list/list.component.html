@@ -1,0 +1,33 @@
+<ul class="list-group">
+    <ng-template #recursiveList let-list>
+      <li *ngFor="let item of list; let i = index" class="list-group-item">
+
+        <div
+          *ngIf="item"
+          class="d-flex justify-content-between align-items-center"
+          [ngClass]="{'pb-3' : item.children.length > 0}">
+            <div>
+                <span class="badge badge-primary btn-xsm">{{item.children.length}}</span>
+                <span class="pl-3">{{item.title}}</span>
+                <span *ngIf="item.children.length > 0"> - </span>
+            </div>
+
+            <div>
+                <ui-add-button class="" (onClick)="onAdd.emit(item.children)"></ui-add-button>
+
+                <button
+                  type="button"
+                  class="btn btn-danger"
+                  (click)="removeHandler(list,i)">Remove</button>
+            </div>
+
+        </div>
+
+        <ul *ngIf="item?.children.length > 0">
+          <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: item?.children }"></ng-container>
+        </ul>
+
+      </li>
+    </ng-template>
+    <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: list }"></ng-container>
+</ul>
