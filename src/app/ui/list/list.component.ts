@@ -3,22 +3,41 @@ import {
   Component,
   Input,
   Output,
-  EventEmitter,
-  ViewChild,
-  ElementRef
+  EventEmitter
 } from '@angular/core';
+
+import {
+  trigger,
+  style,
+  transition,
+  animate,
+  group } from '@angular/animations';
 
 @Component({
   selector: 'ui-list',
   templateUrl: './list.component.html',
-  styleUrls: ['./list.component.scss']
+  styleUrls: ['./list.component.scss'],
+  animations: [
+    trigger('itemAnimation', [
+      transition(':enter', [
+        style({opacity: '.4'}),
+        animate(300)
+      ]),
+      transition(':leave', [
+        group([
+          animate('0.1s ease', style({opacity: '0.3'})),
+          animate('0.2s 0.2s ease', style({opacity: 0}))
+        ])
+      ])
+    ])
+  ]
 })
+
 export class ListComponent {
 
   @Input() list: any;
   @Output() onAdd: EventEmitter<any> = new EventEmitter();
   @Output() onRemove: EventEmitter<any> = new EventEmitter();
-  @ViewChild('main_list') main_list: ElementRef
 
   constructor(private _store: LocalstorageService) { }
 
