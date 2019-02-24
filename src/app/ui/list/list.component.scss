@@ -1,0 +1,11 @@
+.input-block {
+    flex: 1 1 auto;
+    display: flex;
+    align-items: center;
+
+    input {
+        flex: 1;
+        cursor: pointer;
+        border: none;
+    }
+}

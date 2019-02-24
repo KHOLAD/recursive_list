@@ -1,4 +1,11 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { LocalstorageService } from './../../services/localstorage.service';
+import {
+  Component,
+  OnInit,
+  Input,
+  Output,
+  EventEmitter
+} from '@angular/core';
 
 @Component({
   selector: 'ui-list',
@@ -11,7 +18,7 @@ export class ListComponent implements OnInit {
   @Output() onAdd: EventEmitter<any> = new EventEmitter();
   @Output() onRemove: EventEmitter<any> = new EventEmitter();
 
-  constructor() { }
+  constructor(private _store: LocalstorageService) { }
 
   ngOnInit() {
   }
@@ -19,6 +26,10 @@ export class ListComponent implements OnInit {
   removeHandler(arr: any, index: number) {
     const remove_data = {list: arr,index: index}
     this.onRemove.emit(remove_data)
+  }
+
+  onChange(e) {
+    this._store.set(this.list)
   }
 
 }

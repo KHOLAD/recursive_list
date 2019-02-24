@@ -15,11 +15,12 @@
   </div>
 
   <!--Main component tree container-->
-  <div class="my-3 p-3 bg-white rounded shadow-sm" *ngIf="list.length > 0">
+  <div class="my-3 p-3 bg-white rounded shadow-sm">
+    <h2 *ngIf="list?.length === 0">No lists added</h2>
       <ui-list
+        *ngIf="list?.length > 0"
         (onRemove)="removeItem($event)"
         (onAdd)="addItem($event)"
-        *ngIf="list.length > 0"
         [list]="list"></ui-list>
   </div>
 
