@@ -1,5 +1,5 @@
 import { LocalstorageService } from './services/localstorage.service';
-import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 @Component({
@@ -21,7 +21,7 @@ export class AppComponent implements OnInit {
   }
 
   addItem(list: any) {
-    list.push({title: "New list", children:[]})
+    list.push({title: "New list", children:[], hide_child: false})
     this._store.set(this.list)
   }
 
@@ -34,7 +34,7 @@ export class AppComponent implements OnInit {
 
   addCategory() {
     const { value } = this.category;
-    this.list.unshift({title: value, children: []})
+    this.list.unshift({title: value, children: [], hide_child: false})
     this.category.setValue(null)
     this._store.set(this.list)
   }

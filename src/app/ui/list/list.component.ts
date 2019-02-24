@@ -1,10 +1,11 @@
 import { LocalstorageService } from './../../services/localstorage.service';
 import {
   Component,
-  OnInit,
   Input,
   Output,
-  EventEmitter
+  EventEmitter,
+  ViewChild,
+  ElementRef
 } from '@angular/core';
 
 @Component({
@@ -12,16 +13,14 @@ import {
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss']
 })
-export class ListComponent implements OnInit {
+export class ListComponent {
 
   @Input() list: any;
   @Output() onAdd: EventEmitter<any> = new EventEmitter();
   @Output() onRemove: EventEmitter<any> = new EventEmitter();
+  @ViewChild('main_list') main_list: ElementRef
 
   constructor(private _store: LocalstorageService) { }
-
-  ngOnInit() {
-  }
 
   removeHandler(arr: any, index: number) {
     const remove_data = {list: arr,index: index}
@@ -29,6 +28,11 @@ export class ListComponent implements OnInit {
   }
 
   onChange(e) {
+    this._store.set(this.list)
+  }
+
+  hideSection(item: any) {
+    item.hide_child = !item.hide_child
     this._store.set(this.list)
   }
 
